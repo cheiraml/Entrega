@@ -7,8 +7,8 @@ using TMPro;
 
 public class Httptest : MonoBehaviour
 {
-    public string URL;
-    public string URL2;
+    public string BaseDatos;
+    public string RickYMorty;
     public List<RawImage> Images;
     public TextMeshProUGUI textoDelJugador;
     public List<TextMeshProUGUI> textoDeCartas;
@@ -17,13 +17,22 @@ public class Httptest : MonoBehaviour
     void Update() 
     {
         if (Input.GetKeyDown(KeyCode.A)) 
-        {
-            UserID += 1; 
+        {   if (UserID == 3)
+            {
+                UserID = 0;
+            }
+            UserID += 1;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.B))
-        {
+        {   
+            if (UserID == 1)
+            {
+                UserID = 4;
+            }
             UserID -= 1;
+            
         }
     }
 
@@ -34,7 +43,7 @@ public class Httptest : MonoBehaviour
 
     IEnumerator GetUsers()
     {
-        UnityWebRequest request = UnityWebRequest.Get(URL + UserID);
+        UnityWebRequest request = UnityWebRequest.Get(BaseDatos + UserID);
         yield return request.SendWebRequest();
             
         if (request.isNetworkError)
@@ -61,7 +70,7 @@ public class Httptest : MonoBehaviour
 
     IEnumerator GetCharacter(int i, int characterID)
     {
-        UnityWebRequest request = UnityWebRequest.Get(URL2 + "/" + characterID);
+        UnityWebRequest request = UnityWebRequest.Get(RickYMorty + "/" + characterID);
         yield return request.SendWebRequest();
 
         if (request.isNetworkError)
